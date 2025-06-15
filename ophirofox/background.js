@@ -215,21 +215,6 @@ function getBrowserType() {
   }
 }
 
-console.log("L'extension tourne sur :", getBrowserType());
-
-const browserType = getBrowserType();
-const urls = ["*://*.europresse.com/*", "*://*.eureka.cc/*"];
-const options = ["blocking", "requestHeaders"];
-
-// Ajouter extraHeaders uniquement pour Chrome
-if (browserType === 'chrome') {
-  options.push("extraHeaders");
-}
-
-chrome.webRequest.onBeforeSendHeaders.addListener(
-  listener,{ urls: urls }, options
-);
-
 //======== Code pour l'ajout du menu de recherche contextuel sur une sélection de texte ========
 function createEuropresseSearchMenu() {
   chrome.contextMenus.create(

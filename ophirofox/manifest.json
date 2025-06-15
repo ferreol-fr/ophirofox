@@ -15,10 +15,7 @@
     "contextMenus",
     "storage",
     "scripting",
-    "webRequest",
-    "webRequestBlocking",
-    "https://nouveau.europresse.com/*",
-    "https://eureka.cc/*"
+    "webRequest"
   ],
   "optional_permissions": [
       "webNavigation"

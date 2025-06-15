@@ -14,8 +14,7 @@
   "permissions": [
     "contextMenus",
     "storage",
-    "scripting",
-    "webRequest"
+    "scripting"
   ],
   "optional_permissions": [
       "webNavigation"

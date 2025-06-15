@@ -1,5 +1,5 @@
 async function consumeRequestType() {
-    return new Promise((accept, reject) => {
+    return new Promise((accept) => {
         chrome.storage.local.get("ophirofox_request_type",
             (r) => {
                 accept(r.ophirofox_request_type);
@@ -9,7 +9,7 @@ async function consumeRequestType() {
 }
 
 async function consumeReadRequest() {
-    return new Promise((accept, reject) => {
+    return new Promise((accept) => {
         chrome.storage.local.get("ophirofox_read_request",
             (r) => {
                 accept(r.ophirofox_read_request);
@@ -19,7 +19,7 @@ async function consumeReadRequest() {
 }
 
 async function consumeReadPDFRequest() {
-    return new Promise((accept, reject) => {
+    return new Promise((accept) => {
         chrome.storage.local.get("ophirofox_readPDF_request",
             (r) => {
                 accept(r.ophirofox_readPDF_request);
@@ -29,7 +29,7 @@ async function consumeReadPDFRequest() {
 }
 
 async function hasConsumable() {
-    return new Promise((accept, reject) => {
+    return new Promise((accept) => {
         chrome.storage.local.get(
             ["ophirofox_request_type", "ophirofox_readPDF_request"],
             (result) => {
@@ -80,8 +80,6 @@ async function loadRead(){
             const timeDifference = currentDate.getTime() - publishedDate.getTime();
             // Rounds up for tolerance to be sure to not filtering badly
             const daysDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
-
-            let filterValue = 9;
 
             switch (true) {
                 case (daysDifference <= 1):
@@ -195,8 +193,11 @@ async function onLoad() {
 
 function ophirofoxRealoadOnExpired() {
     const params = new URLSearchParams(window.location.search)
-    if (params.get("ErrorCode") == "4000112") {
+    console.error("URLSearchParams: ", params);
+    if (params.get("ErrorCode") === "4000112") {
         // session expirée
+        console.error("session expirée 4000112");
+
         window.history.back();
     }
 }

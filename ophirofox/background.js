@@ -22,14 +22,16 @@ function loadSettings() {
         ophirofoxSettings = typeof data.ophirofox_settings === "string"
           ? JSON.parse(data.ophirofox_settings)
           : data.ophirofox_settings;
-        if (ophirofoxSettings.add_search_menu && searchMenu === null) {
-          console.log(`createEuropresseSearchMenu`);
-          createEuropresseSearchMenu();
-        } else if (!ophirofoxSettings.add_search_menu && searchMenu !== null) {
-          chrome.contextMenus.onClicked.removeListener(onSearchMenuClickHandler);
-          chrome.contextMenus.remove(searchMenu);
-          searchMenu = null;
-          console.log(`removeEuropresseSearchMenu`);
+        if (!/Android/.test(navigator.userAgent)) {
+          if (ophirofoxSettings.add_search_menu && searchMenu === null) {
+            console.log(`createEuropresseSearchMenu`);
+            createEuropresseSearchMenu();
+          } else if (!ophirofoxSettings.add_search_menu && searchMenu !== null) {
+            chrome.contextMenus.onClicked.removeListener(onSearchMenuClickHandler);
+            chrome.contextMenus.remove(searchMenu);
+            searchMenu = null;
+            console.log(`removeEuropresseSearchMenu`);
+          }
         }
         console.log("Settings chargés :", ophirofoxSettings);
       } catch (err) {
@@ -268,12 +270,14 @@ async function onSearchMenuClickHandler(info, tab) {
           }
         }),
       ]).then(() => accept());
-      const manifest = chrome.runtime.getManifest();
-      const partners = manifest.browser_specific_settings.ophirofox_metadata.partners;
-      const partner = partners.find(p => p.name === ophirofoxSettings.partner_name);
-      chrome.tabs.create({
-        url: partner.AUTH_URL
-      });
+      function accept() {
+        const manifest = chrome.runtime.getManifest();
+        const partners = manifest.browser_specific_settings.ophirofox_metadata.partners;
+        const partner = partners.find(p => p.name === ophirofoxSettings.partner_name);
+        chrome.tabs.create({
+          url: partner.AUTH_URL
+        });
+      }
       break;
   }
 }

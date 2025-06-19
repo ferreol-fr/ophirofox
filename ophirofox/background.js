@@ -259,7 +259,7 @@ async function onSearchMenuClickHandler(info, tab) {
       const search_request = info.selectionText;
       Promise.all([
         chrome.storage.local.set({
-          "ophirofox_request_type": { 'type': 'read' }
+          "ophirofox_request_type": { 'type': 'SearchMenu' }
         }),
         chrome.storage.local.set({
           "ophirofox_read_request": {

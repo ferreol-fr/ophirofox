@@ -15,6 +15,7 @@ function getOphirofoxConfigByName(search_name) {
 
 const DEFAULT_SETTINGS = {
   partner_name: "Pas d'intermédiaire",
+  partner_AUTH_URL: "https://nouveau.europresse.com/Login",
   open_links_new_tab: false,
   auto_open_link: false,
   add_search_menu: false,
@@ -44,6 +45,8 @@ async function getSettings() {
  * @param {typeof DEFAULT_SETTINGS} settings
  */
 async function setSettings(settings) {
+  let ophirofoxConfig = await getOphirofoxConfig()
+  settings.partner_AUTH_URL = ophirofoxConfig.AUTH_URL;
   current_settings = settings;
   return new Promise((accept) => {
     chrome.storage.local.set(

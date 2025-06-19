@@ -275,17 +275,3 @@ async function requiredAdditionalPermissions() {
 }
 
 requiredAdditionalPermissions();
-
-// ======== Si le navigateur fonctionne sous Android l'on ne montre pas l'option menu recherche ========
-async function onLoad(){
-  if (isNotAndroid()) {
-    let addSearchMenu = document.getElementById("add_search_label");
-    addSearchMenu.style.display = "block";
-  }
-}
-
-function isNotAndroid() {
-  return !/Android/.test(navigator.userAgent);
-}
-
-onLoad().catch(console.error);

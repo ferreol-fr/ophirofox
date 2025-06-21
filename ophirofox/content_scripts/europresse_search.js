@@ -183,7 +183,7 @@ async function onLoad() {
 
 async function ophirofoxRealoadOnExpired() {
     const params = new URLSearchParams(window.location.search)
-    if (params.get("ErrorCode") === "4000112") {
+    if (params.get("ErrorCode")) {
         // session expiréele
         window.location = current_settings.partner_AUTH_URL;
     }
